@@ -1,56 +1,37 @@
 var $content = $('#content');
 var $title = $('<div id="title"></div>');
-var $imagetitle = $('<img id="imagetitle" src="../IMAGES/Red-Diner-Logo-1.jpg" />');
+var $gameName = $('<p class="tclass"><em>Angry Marvin!!</em></p>');
 var $board = $('<div id="board"></div>');
-var $ul = $('<ul></ul>');
-var $tab1 = $('<li id="tab1">Home</li>');
-var $tab2 = $('<li id="tab2">Menu</li>');
-var $tab3 = $('<li id="tab3">Contact</li>');
-var $articles = $('<div id="articles"></div>');
+var aOfA = [];
 
 $content.append($title);
-$title.append($imagetitle);
+$title.append($gameName);
 
 $content.append($board);
-$board.append($ul);
-$ul.append($tab1);
-    $tab1.addClass('tabclass');
-$ul.append($tab2);
-    $tab2.addClass('tabclass');
-$ul.append($tab3);
-    $tab3.addClass('tabclass');
-
-$content.append($articles);
 
 
-var page1 = function(){
-    var $dinfo = $('<div id="dinfo"></div>');
-    var $infoall = $('<div id="infoall"></div>');
-    var $welcome = $('<p class="welcome">Welcome to the Red Diner.</p>');
+//********** Functions ***************
 
-    $articles.append($dinfo);
-    $dinfo.append($infoall);
-    $infoall.append($welcome);  
+var render = function(){
+    $board.innerHTML = " ";
+    for (var i=0; i < 17; i++){
+        for (var j=0; j < 25; j++){
+            aOfA[i,j] = $board.append('<div class="box stdBG"></div>');
+            /*aOfA[i,j] = $board.append('<div class="box stdBG"><img id="mm" src="../IMAGES/marvin1.jpg" /></div>');*/
+        }     
+    }
+    console.log(aOfA);
+};
 
-    plot();
-}
-
-
-var reset = function(){
-    $articles.slideUp();
-    $('div#dinfo').remove();
-}
-
-var plot = function(){
-    $articles.delay(200).slideDown();
-}
 
 //********** Function Calls ***************
 
-page1();
+$(function(){
 
-$('#tab1').on('click',function(){
-    $articles.hide();
-    reset();
-    page1();
+    render();
+
+   // $('#tab1').on('click',function(){
+       
+   // });
+
 });
