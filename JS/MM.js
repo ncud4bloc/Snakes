@@ -1,12 +1,13 @@
 var $content = $('#content');
 var $title = $('<div id="title"></div>');
-var $gameName = $('<p class="tclass"><em>Angry Marvin!!</em></p>');
+var $gameName = $('<p class="tclass"><em>Marvin!!</em></p>');
 var $board = $('<div id="board"></div>');
 var $row = $('<div class="row" id="rows"></div>');
 var $cell = $('<div class="box stdBG" id="entry"></div>')
 var $aRow;
 var $aCell;
 var gridArray = [];
+var direction = "rt";
 
 $content.append($title);
 $title.append($gameName);
@@ -35,7 +36,29 @@ $(function(){
         }
     }
     
-    $marvinHead = $('#entry_r8_c12');
-    $marvinHead.removeClass('stdBG').addClass('marvin');
+    $marvinHead = $('#entry_r8_c12').removeClass('stdBG').addClass('marvin');
+    /*$marvinHead.removeClass('stdBG').addClass('marvin');*/
+    
+    var keys = [37, 38, 39, 40];
+	$("body").on("keydown", function(event) {
+		var activeKey = event.keyCode;
+        console.log('The keycode is: ' + activeKey);
+		if (keys.indexOf(activeKey) < 0)
+			return;
+		switch(activeKey) {
+			case 37:
+				direction = 'lft';
+				break;
+			case 38:
+				direction = 'up';
+				break;
+			case 39:
+				direction = 'rt';
+				break;
+			case 40:
+				direction = 'dwn';
+		}
+        console.log('The direction is: ' + direction);
+	});
 
 });
