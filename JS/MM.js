@@ -6,8 +6,10 @@ var $row = $('<div class="row" id="rows"></div>');
 var $cell = $('<div class="box stdBG" id="entry"></div>')
 var $aRow;
 var $aCell;
-var gridArray = [];
+var $mvArray = [];
+var chArray = [];
 var direction = "rt";
+
 
 $content.append($title);
 $title.append($gameName);
@@ -17,7 +19,41 @@ $content.append($board);
 
 //********** Functions ***************
 
-
+var $move = function(){
+    var $mHead = $('.marvin');
+    var $cellID = $mHead.attr('id');
+    /*console.log('The cellID is: ' + $cellID);*/
+    
+    $mvArray = $cellID.split('e');
+    $mvArray.shift();
+    /*console.log('The move array is: ' + $mvArray);*/
+    
+    switch(direction) {
+        case 'lft':
+            /* reduce j by 1 */
+            var add = parseInt($mvArray[1]);
+            $new = 'e'+$mvArray[0]+'e'+(add-1);
+            console.log('The new id is: ' + $new);
+            break;
+        case 'rt':
+            /* increase j by 1 */
+            var add = parseInt($mvArray[1]);
+            $new = 'e'+$mvArray[0]+'e'+(add+1);
+            console.log('The new id is: ' + $new);
+            break;
+        case 'up':
+            /* reduce i by 1 */
+            var add = parseInt($mvArray[0]);
+            $new = 'e'+(add-1)+'e'+$mvArray[1];
+            console.log('The new id is: ' + $new);
+            break;
+        case 'dwn':
+            /* increase i by 1 */
+            var add = parseInt($mvArray[0]);
+            $new = 'e'+(add+1)+'e'+$mvArray[1];
+            console.log('The new id is: ' + $new);
+    }
+};
 
 //********** Calls ***************
 
@@ -32,17 +68,17 @@ $(function(){
         for (var j =0; j <25; j++){
             $aCell = $cell.clone();
             $aRow.append($aCell); 
-            $('#entry').attr('id', 'entry_r' +i+ '_c' +j);
+            $('#entry').attr('id', 'e' +i+ 'e' +j);
         }
     }
     
-    $marvinHead = $('#entry_r8_c12').removeClass('stdBG').addClass('marvin');
-    /*$marvinHead.removeClass('stdBG').addClass('marvin');*/
+    $marvinHeadStart = $('#e8e12').removeClass('stdBG').addClass('marvin');
     
     var keys = [37, 38, 39, 40];
 	$("body").on("keydown", function(event) {
+        $move();
 		var activeKey = event.keyCode;
-        console.log('The keycode is: ' + activeKey);
+        /*console.log('The keycode is: ' + activeKey);*/
 		if (keys.indexOf(activeKey) < 0)
 			return;
 		switch(activeKey) {
@@ -58,7 +94,7 @@ $(function(){
 			case 40:
 				direction = 'dwn';
 		}
-        console.log('The direction is: ' + direction);
+        /*console.log('The direction is: ' + direction);*/
 	});
 
 });
