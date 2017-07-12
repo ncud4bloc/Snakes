@@ -9,6 +9,7 @@ var $aCell;
 var $mvArray = [];
 var chArray = [];
 var direction = "rt";
+var $new;
 
 
 $content.append($title);
@@ -22,37 +23,38 @@ $content.append($board);
 var $move = function(){
     var $mHead = $('.marvin');
     var $cellID = $mHead.attr('id');
-    /*console.log('The cellID is: ' + $cellID);*/
+    console.log('The cellID is: ' + $cellID);
     
     $mvArray = $cellID.split('e');
     $mvArray.shift();
-    /*console.log('The move array is: ' + $mvArray);*/
+    console.log('The head array is: ' + $mvArray);
     
     switch(direction) {
         case 'lft':
             /* reduce j by 1 */
             var add = parseInt($mvArray[1]);
-            $new = 'e'+$mvArray[0]+'e'+(add-1);
+            $new = '#e'+$mvArray[0]+'e'+(add-1);
             console.log('The new id is: ' + $new);
             break;
         case 'rt':
             /* increase j by 1 */
             var add = parseInt($mvArray[1]);
-            $new = 'e'+$mvArray[0]+'e'+(add+1);
+            $new = '#e'+$mvArray[0]+'e'+(add+1);
             console.log('The new id is: ' + $new);
             break;
         case 'up':
             /* reduce i by 1 */
             var add = parseInt($mvArray[0]);
-            $new = 'e'+(add-1)+'e'+$mvArray[1];
+            $new = '#e'+(add-1)+'e'+$mvArray[1];
             console.log('The new id is: ' + $new);
             break;
         case 'dwn':
             /* increase i by 1 */
             var add = parseInt($mvArray[0]);
-            $new = 'e'+(add+1)+'e'+$mvArray[1];
+            $new = '#e'+(add+1)+'e'+$mvArray[1];
             console.log('The new id is: ' + $new);
     }
+    console.log('Its type is: ' + typeof($new));
 };
 
 //********** Calls ***************
@@ -97,4 +99,5 @@ $(function(){
         /*console.log('The direction is: ' + direction);*/
 	});
 
+    
 });

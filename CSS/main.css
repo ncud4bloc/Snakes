@@ -8,7 +8,7 @@
     background-color: #fff; 
     width: 62%;
     width: 800px;
-    height: 476px;
+    height: 544px;
     /*margin-left: 0.5%;*/
     margin: 0 auto 0 auto;
 }
@@ -63,6 +63,13 @@
 
 .planet {
     background-image: url(../IMAGES/saturn1.jpg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+.fini {
+    background-image: url(../IMAGES/end1.jpg);
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
