@@ -7,12 +7,13 @@ var $cell = $('<div class="box stdBG"></div>')
 var $aRow;
 var $aCell;
 var direction = "rt";
-var keyCount = 0;
 var indexI;
 var indexJ;
 var bodyLen = 1;
 var snakePart = 'b8b12';
 var snake = [snakePart];
+var mvTime = 300;
+var tTime = 10000;
 
 $content.append($title);
 $title.append($gameName);
@@ -35,7 +36,8 @@ var makeGrid = function(){
                 indexJ = j;
             }
         }
-    }    
+    } 
+    makeTarget();
 };
 
 var getMvDirection = function(){
@@ -57,8 +59,6 @@ var getMvDirection = function(){
 			case 40:
 				direction = 'dwn';
 		}
-        keyCount +=1;
-        makeTarget();
         play();
 	});
 };
@@ -74,7 +74,6 @@ var makeTarget =function(){
 };
 
 var moveHead = function(){
-    
     switch(direction) {
         case 'lft':
             indexJ -= 1;
@@ -87,9 +86,11 @@ var moveHead = function(){
             break;
         case 'dwn':
             indexI += 1;
-    }
-       
+    }   
     snakePart = 'b'+indexI+'b'+indexJ;
+        if(snake.indexOf(snakePart) != -1){
+            stop();
+        }
     snake.unshift(snakePart);
     console.log('The snake is: ' + snake);
     if(snake.length > bodyLen){
@@ -99,28 +100,23 @@ var moveHead = function(){
         var xIndI = parseInt(partArr[0]);
         var xIndJ = parseInt(partArr[1]);
         $('.row').eq(xIndI).find('.box').eq(xIndJ).removeClass('marvin').addClass('stdBG');
-    } 
-    
+    }
+    if((indexI > 17) || (indexI < 0) || (indexJ > 24) || (indexJ < 0)){
+        stop();
+    }
     if($('.row').eq(indexI).find('.box').eq(indexJ).hasClass('planet')){
         bodyLen +=1;
         $('.row').eq(indexI).find('.box').eq(indexJ).removeClass('planet').addClass('marvin');
     } else {
         $('.row').eq(indexI).find('.box').eq(indexJ).removeClass('stdBG').addClass('marvin');
     }
-    
-   
-/* BEGIN END CONTITIONS */    
-    if((indexI > 17) || (indexI < 0) || (indexJ > 24) || (indexJ < 0)){
-        stop();
-    }
-/* END END CONTITIONS */  
-    
+    mvTime += 300;
+    tTime += 10000;
 };
 
 var play = function(){
-    /*var gamePlay = setInterval(moveHead, 1000);
-    var addTarget = setInterval(makeTarget, 10000);*/
-    moveHead();
+    var gamePlay = setInterval(moveHead, mvTime);
+    var addTarget = setInterval(makeTarget, tTime);
 };
 
 var stop = function(){
