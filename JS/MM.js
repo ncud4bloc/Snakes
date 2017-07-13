@@ -26,7 +26,6 @@ var makeGrid = function(){
     for (var i=0; i < 17; i++){
         $aRow = $row.clone();
         $board.append($aRow);
-        
         for (var j =0; j <25; j++){
             $aCell = $cell.clone();
             $aRow.append($aCell); 
@@ -37,7 +36,16 @@ var makeGrid = function(){
             }
         }
     } 
-    makeTarget();
+};
+
+var makeTarget =function(){
+    var locI = Math.floor((Math.random() * 17) + 1);
+    var locJ = Math.floor((Math.random() * 25) + 1);
+    if($('.row').eq(locI).find('.box').eq(locJ).hasClass('marvin')){
+        return;
+    } else {
+        $('.row').eq(locI).find('.box').eq(locJ).removeClass('stdBG').addClass('planet');
+    }
 };
 
 var getMvDirection = function(){
@@ -59,18 +67,8 @@ var getMvDirection = function(){
 			case 40:
 				direction = 'dwn';
 		}
-        play();
+        play();     /* Calling play here starts the game once an arrow key is pressed */
 	});
-};
-
-var makeTarget =function(){
-    var locI = Math.floor((Math.random() * 17) + 1);
-    var locJ = Math.floor((Math.random() * 25) + 1);
-    if($('.row').eq(locI).find('.box').eq(locJ).hasClass('marvin')){
-        return;
-    } else {
-        $('.row').eq(locI).find('.box').eq(locJ).removeClass('stdBG').addClass('planet');
-    }
 };
 
 var moveHead = function(){
@@ -92,7 +90,6 @@ var moveHead = function(){
             stop();
         }
     snake.unshift(snakePart);
-    console.log('The snake is: ' + snake);
     if(snake.length > bodyLen){
         var exSnake = snake.pop();
         var partArr = exSnake.split('b');
@@ -123,7 +120,6 @@ var stop = function(){
     $('.box').removeClass('marvin');
     $('.box').removeClass('planet');
     $('.box').addClass('fini');
-    /*$('.row').eq(indexI).find('.box').eq(indexJ).removeClass('marvin').addClass('fini');*/
     clearInterval(gamePlay);
     delete gamePlay;
     clearInterval(addTarget);
@@ -134,8 +130,8 @@ var stop = function(){
 //********** Calls ***************
 
 $(function(){
-    
     makeGrid();
+    makeTarget();
     getMvDirection();
-    
+    /*play();*/ /* Calling play here starts the game immediately */
 });
