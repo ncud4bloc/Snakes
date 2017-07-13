@@ -11,11 +11,11 @@ var keyCount = 0;
 var indexI;
 var indexJ;
 var bodyLen = 1;
-
+var snakePart = 'b8b12';
+var snake = [snakePart];
 
 $content.append($title);
 $title.append($gameName);
-
 $content.append($board);
 
 
@@ -74,63 +74,41 @@ var makeTarget =function(){
 };
 
 var moveHead = function(){
-    var bodyIndexI = indexI;
-    var bodyIndexJ = indexJ;
-    var diagI;
-    var diagJ;
+    
     switch(direction) {
         case 'lft':
             indexJ -= 1;
-            bodyIndexJ = indexJ + bodyLen;
-            bodyIndexI = indexI;
-            diagI = bodyIndexI +1;
-            diagJ = bodyIndexJ;
             break;
         case 'rt':
             indexJ += 1;
-            bodyIndexJ = indexJ - bodyLen;
-            bodyIndexI = indexI;
-            diagI = bodyIndexI -1;
-            diagJ = bodyIndexJ;
             break;
         case 'up':
             indexI -= 1;
-            bodyIndexI = indexI + bodyLen;
-            bodyIndexJ = indexJ;
-            diagI = bodyIndexI;
-            diagJ = bodyIndexJ +1;
             break;
         case 'dwn':
             indexI += 1;
-            bodyIndexI = indexI - bodyLen;
-            bodyIndexJ = indexJ;
-            diagI = bodyIndexI;
-            diagJ = bodyIndexJ -1;
     }
+       
+    snakePart = 'b'+indexI+'b'+indexJ;
+    snake.unshift(snakePart);
+    console.log('The snake is: ' + snake);
+    if(snake.length > bodyLen){
+        var exSnake = snake.pop();
+        var partArr = exSnake.split('b');
+        partArr.shift();
+        var xIndI = parseInt(partArr[0]);
+        var xIndJ = parseInt(partArr[1]);
+        $('.row').eq(xIndI).find('.box').eq(xIndJ).removeClass('marvin').addClass('stdBG');
+    } 
+    
     if($('.row').eq(indexI).find('.box').eq(indexJ).hasClass('planet')){
         bodyLen +=1;
         $('.row').eq(indexI).find('.box').eq(indexJ).removeClass('planet').addClass('marvin');
     } else {
         $('.row').eq(indexI).find('.box').eq(indexJ).removeClass('stdBG').addClass('marvin');
     }
-
-    /* WIP */
-    if ((diagI != indexI) && (diagJ != indexJ)){
-        $('.row').eq(diagI).find('.box').eq(diagJ).removeClass('marvin').addClass('stdBG');
-    }
-    /* WIP */
     
-    $('.row').eq(bodyIndexI).find('.box').eq(bodyIndexJ).removeClass('marvin').addClass('stdBG');
-    
-    
-/* BEGIN BODY CONTITIONS */    
- 
-    
-/* END BODY CONTITIONS */  
-    
-    
-    
-    
+   
 /* BEGIN END CONTITIONS */    
     if((indexI > 17) || (indexI < 0) || (indexJ > 24) || (indexJ < 0)){
         stop();
